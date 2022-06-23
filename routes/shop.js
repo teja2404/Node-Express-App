@@ -8,7 +8,13 @@
 
  router.get('/products', shopsController.getProducts)
 
+ router.get('/products/:productId', shopsController.getProduct)
+
+
  router.get('/cart', shopsController.getCart)
+ router.post('/cart', shopsController.postCart)
+
+ router.post('/cart-delete-item', shopsController.postCardDeleteProduct)
 
  router.get('/checkout', shopsController.getCheckout)
  router.get('/orders', shopsController.getOrders)
