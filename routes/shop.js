@@ -19,4 +19,6 @@
  router.get('/checkout', shopsController.getCheckout)
  router.get('/orders', shopsController.getOrders)
 
+ router.post('/create-order', shopsController.postOrder)
+
  module.exports = router
