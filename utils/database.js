@@ -1,21 +1,27 @@
-// const mysql = require('mysql2');
+const mongodb = require('mongodb')
+const MongoClient = mongodb.MongoClient;
+let _db
+const mongoConnect = callback => {
+  MongoClient.connect('mongodb+srv://arunTeja:McJ5BfmvwARrpCur@cluster0.e6mns.mongodb.net/shop?retryWrites=true&w=majority')
+    .then(client => {
+      console.log('connected')
+      _db = client.db()
+      callback()
+    })
+    .catch(err => {
+      console.log(err)
+      // throw err
+    })
+}
+// mongodb+srv://arunTeja:McJ5BfmvwARrpCur@cluster0.e6mns.mongodb.net/shop
+// mongodb+srv://arunTeja:McJ5BfmvwARrpCur@test.e6mns.mongodb.net/shop?retryWrites=true&w=majority
 
-// const pool = mysql.createPool({
-//   host: 'localhost',
-//   user: 'root',
-//   database: 'node-complete',
-//   password: 'teja@IBM'
-// })
+const getDb = () => {
+  if (_db) {
+    return _db;
+  }
+  // throw 'no database found!'
+}
 
-// module.exports = pool.promise()
-
-const {
-  Sequelize
-} = require('sequelize')
-
-const sequelize = new Sequelize('node-complete', 'root', 'teja@IBM', {
-  dialect: 'mysql',
-  'host': 'localhost'
-})
-
-module.exports = sequelize
+exports.mongoConnect = mongoConnect
+exports.getDb = getDb

@@ -7,12 +7,12 @@ const router = express.Router()
 
 router.get('/add-product', adminController.getAddProducts)
 
-router.get('/products', adminController.products)
+router.get('/products', adminController.getProducts)
 
-router.post('/add-product', adminController.postAddProducts)
-router.get('/edit-product/:productId', adminController.getEditProducts)
+router.post('/add-product', adminController.postAddProduct)
+router.get('/edit-product/:productId', adminController.getEditProduct)
 
-router.post('/edit-product', adminController.postEditProducts)
+router.post('/edit-product', adminController.postEditProduct)
 router.post('/delete-product', adminController.postDeleteProduct)
 
 
