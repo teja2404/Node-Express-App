@@ -6,7 +6,7 @@ const user = require('../models/user');
 exports.getProducts = (req, res, next) => {
   Product.find()
     .then(products => {
-      res.render('shop/products-list', {
+      res.render('shop/index', {
         prods: products,
         pageTitle: 'All Products',
         path: '/products'
@@ -30,7 +30,7 @@ exports.getProduct = (req, res, next) => {
   //   .catch(err => console.log(err));
   Product.findById(prodId)
     .then(product => {
-      res.render('shop/product-detail', {
+      res.render('shop/product-details', {
         product: product,
         pageTitle: product.title,
         path: '/products'
@@ -42,10 +42,10 @@ exports.getProduct = (req, res, next) => {
 exports.getIndex = (req, res, next) => {
   Product.find()
     .then(products => {
-      res.render('shop/index', {
+      res.render('shop/products-list', {
         prods: products,
         pageTitle: 'Shop',
-        path: '/'
+        path: '/',
       });
     })
     .catch(err => {
@@ -54,6 +54,7 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
+  console.log(req.session)
   req.user.populate('cart.items.productId')
     // .exec()
     .then(user => {
@@ -70,10 +71,9 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
-  console.log(prodId)
+  console.log(req.user + '1')
   Product.findById(prodId)
     .then(product => {
-      console.log(product)
       return req.user.addToCart(product);
     })
     .then(result => {
@@ -110,7 +110,7 @@ exports.postOrder = (req, res, next) => {
       console.log(products[0])
       const order = new Order({
         user: {
-          name: req.user.name,
+          email: req.user.email,
           userId: req.user
         },
         products: products
